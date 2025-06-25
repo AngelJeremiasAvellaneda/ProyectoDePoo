@@ -87,6 +87,7 @@ public class FrmRegistrarCliente extends javax.swing.JFrame {
         telefono1 = new javax.swing.JTextField();
         correo1 = new javax.swing.JTextField();
         jLabel50 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jLabel51 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout ReservaLayout = new javax.swing.GroupLayout(Reserva.getContentPane());
@@ -536,6 +537,19 @@ public class FrmRegistrarCliente extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 920, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 660, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, 920, 660));
+
         jLabel51.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/FondoBienvenida.jpg"))); // NOI18N
         getContentPane().add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 800));
 
@@ -615,6 +629,7 @@ public class FrmRegistrarCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
