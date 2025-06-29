@@ -13,7 +13,6 @@ public class FrmReservas extends javax.swing.JFrame {
      */
     public FrmReservas() {
         initComponents();
-        
         setLocationRelativeTo(null);
     }
 
@@ -54,19 +53,19 @@ public class FrmReservas extends javax.swing.JFrame {
         User1 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
+        PaneInicio = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
+        PaneReservas = new javax.swing.JPanel();
         jLabel34 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
-        jPanel11 = new javax.swing.JPanel();
+        PaneMesas = new javax.swing.JPanel();
         jLabel37 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
-        jPanel12 = new javax.swing.JPanel();
+        PanePlatillos = new javax.swing.JPanel();
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
-        jPanel13 = new javax.swing.JPanel();
+        PaneUsuarios = new javax.swing.JPanel();
         jLabel41 = new javax.swing.JLabel();
         jLabel40 = new javax.swing.JLabel();
         TablePane1 = new javax.swing.JTabbedPane();
@@ -90,6 +89,12 @@ public class FrmReservas extends javax.swing.JFrame {
         jLabel31 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -229,15 +234,17 @@ public class FrmReservas extends javax.swing.JFrame {
                                     .addComponent(jLabel17)))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(153, 153, 153)
-                                .addComponent(btnRegistrarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(57, 57, 57)
-                                .addComponent(cmbSede, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnRegistrarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel13)
                         .addGap(50, 50, 50))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cmbSede, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(353, 353, 353))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,10 +283,10 @@ public class FrmReservas extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbSede, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRegistrarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(cmbSede, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(btnRegistrarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
         );
 
@@ -320,18 +327,18 @@ public class FrmReservas extends javax.swing.JFrame {
         jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/FondoSuperiorIzquierdo.png"))); // NOI18N
         jPanel5.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 250));
 
-        jPanel9.setBackground(new java.awt.Color(255, 238, 238));
-        jPanel9.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+        PaneInicio.setBackground(new java.awt.Color(253, 249, 249));
+        PaneInicio.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jPanel9MouseMoved(evt);
+                PaneInicioMouseMoved(evt);
             }
         });
-        jPanel9.addMouseListener(new java.awt.event.MouseAdapter() {
+        PaneInicio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel9MouseClicked(evt);
+                PaneInicioMouseClicked(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jPanel9MouseExited(evt);
+                PaneInicioMouseExited(evt);
             }
         });
 
@@ -341,33 +348,46 @@ public class FrmReservas extends javax.swing.JFrame {
         jLabel33.setForeground(new java.awt.Color(181, 88, 19));
         jLabel33.setText("Inicio");
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
+        javax.swing.GroupLayout PaneInicioLayout = new javax.swing.GroupLayout(PaneInicio);
+        PaneInicio.setLayout(PaneInicioLayout);
+        PaneInicioLayout.setHorizontalGroup(
+            PaneInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneInicioLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
                 .addComponent(jLabel33)
                 .addContainerGap(140, Short.MAX_VALUE))
         );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
+        PaneInicioLayout.setVerticalGroup(
+            PaneInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneInicioLayout.createSequentialGroup()
+                .addGroup(PaneInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneInicioLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel29))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
+                    .addGroup(PaneInicioLayout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
-        jPanel5.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 350, 80));
+        jPanel5.add(PaneInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 350, 80));
 
-        jPanel10.setBackground(new java.awt.Color(255, 238, 238));
+        PaneReservas.setBackground(new java.awt.Color(253, 249, 249));
+        PaneReservas.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                PaneReservasMouseMoved(evt);
+            }
+        });
+        PaneReservas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PaneReservasMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                PaneReservasMouseExited(evt);
+            }
+        });
 
         jLabel34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/reserva.png"))); // NOI18N
 
@@ -375,33 +395,46 @@ public class FrmReservas extends javax.swing.JFrame {
         jLabel39.setForeground(new java.awt.Color(181, 88, 19));
         jLabel39.setText("Reservas");
 
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
+        javax.swing.GroupLayout PaneReservasLayout = new javax.swing.GroupLayout(PaneReservas);
+        PaneReservas.setLayout(PaneReservasLayout);
+        PaneReservasLayout.setHorizontalGroup(
+            PaneReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneReservasLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(jLabel34)
                 .addGap(54, 54, 54)
                 .addComponent(jLabel39)
                 .addContainerGap(110, Short.MAX_VALUE))
         );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createSequentialGroup()
+        PaneReservasLayout.setVerticalGroup(
+            PaneReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneReservasLayout.createSequentialGroup()
+                .addGroup(PaneReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PaneReservasLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel34))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
+                    .addGroup(PaneReservasLayout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jLabel39)))
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
-        jPanel5.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 350, 80));
+        jPanel5.add(PaneReservas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 350, 80));
 
-        jPanel11.setBackground(new java.awt.Color(255, 238, 238));
+        PaneMesas.setBackground(new java.awt.Color(253, 249, 249));
+        PaneMesas.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                PaneMesasMouseMoved(evt);
+            }
+        });
+        PaneMesas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PaneMesasMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                PaneMesasMouseExited(evt);
+            }
+        });
 
         jLabel37.setFont(new java.awt.Font("Segoe UI Light", 1, 22)); // NOI18N
         jLabel37.setForeground(new java.awt.Color(181, 88, 19));
@@ -409,32 +442,32 @@ public class FrmReservas extends javax.swing.JFrame {
 
         jLabel38.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/tabla.png"))); // NOI18N
 
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+        javax.swing.GroupLayout PaneMesasLayout = new javax.swing.GroupLayout(PaneMesas);
+        PaneMesas.setLayout(PaneMesasLayout);
+        PaneMesasLayout.setHorizontalGroup(
+            PaneMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PaneMesasLayout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addComponent(jLabel38)
                 .addGap(47, 47, 47)
                 .addComponent(jLabel37)
                 .addContainerGap(136, Short.MAX_VALUE))
         );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
+        PaneMesasLayout.setVerticalGroup(
+            PaneMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneMesasLayout.createSequentialGroup()
                 .addContainerGap(10, Short.MAX_VALUE)
                 .addComponent(jLabel38)
                 .addContainerGap())
-            .addGroup(jPanel11Layout.createSequentialGroup()
+            .addGroup(PaneMesasLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jLabel37)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel5.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 350, 80));
+        jPanel5.add(PaneMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 350, 80));
 
-        jPanel12.setBackground(new java.awt.Color(255, 238, 238));
+        PanePlatillos.setBackground(new java.awt.Color(253, 249, 249));
 
         jLabel35.setFont(new java.awt.Font("Segoe UI Light", 1, 22)); // NOI18N
         jLabel35.setForeground(new java.awt.Color(181, 88, 19));
@@ -442,32 +475,32 @@ public class FrmReservas extends javax.swing.JFrame {
 
         jLabel36.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/restaurante.png"))); // NOI18N
 
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+        javax.swing.GroupLayout PanePlatillosLayout = new javax.swing.GroupLayout(PanePlatillos);
+        PanePlatillos.setLayout(PanePlatillosLayout);
+        PanePlatillosLayout.setHorizontalGroup(
+            PanePlatillosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanePlatillosLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
                 .addComponent(jLabel35)
                 .addContainerGap(121, Short.MAX_VALUE))
         );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel12Layout.createSequentialGroup()
+        PanePlatillosLayout.setVerticalGroup(
+            PanePlatillosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanePlatillosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel36)
                 .addContainerGap(10, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanePlatillosLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel35)
                 .addGap(22, 22, 22))
         );
 
-        jPanel5.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 530, 350, 80));
+        jPanel5.add(PanePlatillos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 530, 350, 80));
 
-        jPanel13.setBackground(new java.awt.Color(255, 238, 238));
+        PaneUsuarios.setBackground(new java.awt.Color(253, 249, 249));
 
         jLabel41.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/como.png"))); // NOI18N
 
@@ -475,30 +508,30 @@ public class FrmReservas extends javax.swing.JFrame {
         jLabel40.setForeground(new java.awt.Color(181, 88, 19));
         jLabel40.setText("Usuarios");
 
-        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
-        jPanel13.setLayout(jPanel13Layout);
-        jPanel13Layout.setHorizontalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
+        javax.swing.GroupLayout PaneUsuariosLayout = new javax.swing.GroupLayout(PaneUsuarios);
+        PaneUsuarios.setLayout(PaneUsuariosLayout);
+        PaneUsuariosLayout.setHorizontalGroup(
+            PaneUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneUsuariosLayout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48)
                 .addComponent(jLabel40)
                 .addContainerGap(113, Short.MAX_VALUE))
         );
-        jPanel13Layout.setVerticalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
+        PaneUsuariosLayout.setVerticalGroup(
+            PaneUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PaneUsuariosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel41, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(jPanel13Layout.createSequentialGroup()
+            .addGroup(PaneUsuariosLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabel40)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel5.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 620, 350, 80));
+        jPanel5.add(PaneUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 620, 350, 80));
 
         FrmGestionReservas.getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 800));
 
@@ -724,7 +757,70 @@ public class FrmReservas extends javax.swing.JFrame {
 
         TablePane1.addTab("tab3", jPanel8);
 
-        FrmGestionReservas.getContentPane().add(TablePane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 100, 850, 700));
+        jLabel7.setText("jLabel7");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(334, 334, 334)
+                .addComponent(jLabel7)
+                .addContainerGap(479, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(204, 204, 204)
+                .addComponent(jLabel7)
+                .addContainerGap(445, Short.MAX_VALUE))
+        );
+
+        TablePane1.addTab("tab4", jPanel1);
+
+        jLabel8.setText("jLabel8");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(420, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addGap(393, 393, 393))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(341, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addGap(308, 308, 308))
+        );
+
+        TablePane1.addTab("tab5", jPanel2);
+
+        jLabel9.setText("jLabel9");
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(731, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addGap(82, 82, 82))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(444, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addGap(205, 205, 205))
+        );
+
+        TablePane1.addTab("tab6", jPanel6);
+
+        FrmGestionReservas.getContentPane().add(TablePane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, 850, 700));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1200, 800));
@@ -857,94 +953,12 @@ public class FrmReservas extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbRolActionPerformed
 
     private void btnRegistrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarUsuarioActionPerformed
-        cConnection cn = new cConnection(); 
-        Connection con = cn.ObtenerConexion();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        String nombres = txtNombres.getText().trim();
-        String apellidos = txtApellidos.getText().trim();
-        String telefono = txtTelefono.getText().trim();
-        String usuario = txtUsuario.getText().trim();
-        String contraseña = txtContraseña.getText().trim();
-        String nombreSede = cmbSede.getSelectedItem().toString().trim();
-        String rolUsuario = cmbRol.getSelectedItem().toString().trim(); // <- NUEVO
-
-        if (nombres.isEmpty() || apellidos.isEmpty() || telefono.isEmpty() ||
-            usuario.isEmpty() || contraseña.isEmpty() || rolUsuario.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
-            return;
-        }
-
-        try {
-            // Obtener ID de la sede desde su nombre
-            String querySede = "SELECT id_sede FROM sede WHERE nombre = ?";
-            ps = con.prepareStatement(querySede);
-            ps.setString(1, nombreSede);
-            rs = ps.executeQuery();
-
-            int idSede = -1;
-            if (rs.next()) {
-                idSede = rs.getInt("id_sede");
-            } else {
-                JOptionPane.showMessageDialog(null, "Sede no encontrada.");
-                return;
-            }
-            rs.close(); ps.close();
-
-            // Verificar si el usuario ya existe
-            String checkUser = "SELECT COUNT(*) FROM Usuario WHERE usuario = ?";
-            ps = con.prepareStatement(checkUser);
-            ps.setString(1, usuario);
-            rs = ps.executeQuery();
-
-            if (rs.next() && rs.getInt(1) > 0) {
-                JOptionPane.showMessageDialog(null, "El nombre de usuario ya está en uso.");
-                return;
-            }
-            rs.close(); ps.close();
-
-            // Insertar nuevo usuario
-            String insertSQL = "INSERT INTO Usuario (nombres, apellidos, telefono, usuario, contraseña, rol, id_sede) " +
-                               "VALUES (?, ?, ?, ?, ?, ?, ?)";
-            ps = con.prepareStatement(insertSQL);
-            ps.setString(1, nombres);
-            ps.setString(2, apellidos);
-            ps.setString(3, telefono);
-            ps.setString(4, usuario);
-            ps.setString(5, contraseña);
-            ps.setString(6, rolUsuario); // <- AQUÍ SE USA EL COMBOBOX DE ROL
-            ps.setInt(7, idSede);
-
-            int resultado = ps.executeUpdate();
-
-            if (resultado > 0) {
-                JOptionPane.showMessageDialog(null, "Usuario registrado correctamente.");
-                this.setVisible(false);
-                FrmReservas login = new FrmReservas();
-                login.setLocationRelativeTo(null);
-                login.setSize(1200, 830);
-                login.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(null, "No se pudo registrar el usuario.");
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al registrar usuario:\n" + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (con != null) con.close();
-            } catch (SQLException ex) {
-                System.out.println("Error cerrando conexión: " + ex.getMessage());
-            }
-        }      
+        
     }//GEN-LAST:event_btnRegistrarUsuarioActionPerformed
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
-        cConnection cn = new cConnection(); // conexión a la BD
-        Connection con = cn.ObtenerConexion();
+        cConnection cn = new cConnection();
+        Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
@@ -955,68 +969,79 @@ public class FrmReservas extends javax.swing.JFrame {
 
         if (user.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese nombre de usuario");
-        } else if (passw.isEmpty()) {
+            txtUser.requestFocus();
+            return;
+        }
+        if (passw.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese contraseña");
-        } else {
-            try {
-                String sql = "SELECT * FROM Usuario WHERE usuario = ? AND contraseña = ?";
-                ps = con.prepareStatement(sql);
-                ps.setString(1, user);
-                ps.setString(2, passw);
-                rs = ps.executeQuery();
+            txtContraseña.requestFocus();
+            return;
+        }
 
-                if (rs.next()) {
-                    // Usuario válido
-                    this.setVisible(false); // Oculta FrmReservas
+        try {
+            con = cn.ObtenerConexion();
 
-                    final FormSplash sp = new FormSplash();
-                    sp.setVisible(true);
+            String sql = "SELECT * FROM Usuario WHERE usuario = ? AND contraseña = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, user);
+            ps.setString(2, passw);
 
-                    Thread hilo = new Thread() {
-                        @Override
-                        public void run() {
-                            for (int i = 0; i <= 100; i++) {
-                                sp.lblPorcentaje.setText(i + "%");
+            rs = ps.executeQuery();
 
-                                if (i == 10) sp.lblEstado.setText("Cargando Módulos...");
-                                else if (i == 50) sp.lblEstado.setText("Conectando con la Base de datos...");
-                                else if (i == 90) sp.lblEstado.setText("Iniciando Aplicación...");
-                                else if (i == 100) {
-                                    sp.setVisible(false);
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso. Bienvenido " + rs.getString("nombre"));
 
-                                    FrmGestionReservas.setSize(1200, 800);
-                                    FrmGestionReservas.setLocationRelativeTo(null);
-                                    FrmGestionReservas.setVisible(true);
-                                }
+                this.setVisible(false); // Oculta login
 
-                                sp.pgBarraCarga.setValue(i);
-                                try {
-                                    Thread.sleep(30);
-                                } catch (InterruptedException ex) {
-                                    System.out.println("Error en hilo: " + ex.getMessage());
-                                }
+                // Aca se cambia de Formulario
+                final FormSplash sp = new FormSplash();
+                sp.setVisible(true);
+
+                Thread hilo = new Thread() {
+                    @Override
+                    public void run() {
+                        for (int i = 0; i <= 100; i++) {
+                            sp.lblPorcentaje.setText(i + "%");
+
+                            if (i == 10) sp.lblEstado.setText("Cargando Módulos...");
+                            else if (i == 50) sp.lblEstado.setText("Conectando con la Base de datos...");
+                            else if (i == 90) sp.lblEstado.setText("Iniciando Aplicación...");
+                            else if (i == 100) {
+                                sp.setVisible(false);
+
+                                // Aca se cambia de Formulario
+                                FrmGestionReservas.setSize(1200, 800);
+                                FrmGestionReservas.setLocationRelativeTo(null);
+                                FrmGestionReservas.setVisible(true);
+                            }
+
+                            sp.pgBarraCarga.setValue(i);
+                            try {
+                                Thread.sleep(30);
+                            } catch (InterruptedException ex) {
+                                System.out.println("Error en hilo: " + ex.getMessage());
                             }
                         }
-                    };
-                    hilo.start();
+                    }
+                };
+                hilo.start();
 
-                } else {
-                    JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
-                    txtUser.setText("");
-                    txtContraseña.setText("");
-                    txtUser.requestFocus();
-                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+                txtUser.setText("");
+                txtContraseña.setText("");
+                txtUser.requestFocus();
+            }
 
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error de conexión:\n" + e.getMessage());
-            } finally {
-                try {
-                    if (rs != null) rs.close();
-                    if (ps != null) ps.close();
-                    if (con != null) con.close();
-                } catch (SQLException ex) {
-                    System.out.println("Error cerrando conexión: " + ex.getMessage());
-                }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error de conexión: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException ex) {
+                System.out.println("Error cerrando conexión: " + ex.getMessage());
             }
         }
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
@@ -1025,17 +1050,16 @@ public class FrmReservas extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void jPanel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseClicked
+    private void PaneInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PaneInicioMouseClicked
         TablePane1.setSelectedIndex(0);
-    }//GEN-LAST:event_jPanel9MouseClicked
+    }//GEN-LAST:event_PaneInicioMouseClicked
 
-    private void jPanel9MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseMoved
-        Pane1.setBackground(new Color (214,180, 248));
-    }//GEN-LAST:event_jPanel9MouseMoved
-
-    private void jPanel9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseExited
-        Pane1.setBackground(new Color (242, 230, 255));
-    }//GEN-LAST:event_jPanel9MouseExited
+    private void PaneInicioMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PaneInicioMouseMoved
+        PaneInicio.setBackground(new Color (245,236,229));
+    }//GEN-LAST:event_PaneInicioMouseMoved
+    private void PaneInicioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PaneInicioMouseExited
+        PaneInicio.setBackground(new Color (242,231,229));
+    }//GEN-LAST:event_PaneInicioMouseExited
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         this.setVisible(false);
@@ -1076,6 +1100,30 @@ public class FrmReservas extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cmbSedeActionPerformed
 
+    private void PaneReservasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PaneReservasMouseClicked
+        TablePane1.setSelectedIndex(1);
+    }//GEN-LAST:event_PaneReservasMouseClicked
+
+    private void PaneReservasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PaneReservasMouseExited
+        PaneReservas.setBackground(new Color (242,231,229));
+    }//GEN-LAST:event_PaneReservasMouseExited
+
+    private void PaneReservasMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PaneReservasMouseMoved
+        PaneReservas.setBackground(new Color (245,236,229));
+    }//GEN-LAST:event_PaneReservasMouseMoved
+
+    private void PaneMesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PaneMesasMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PaneMesasMouseClicked
+
+    private void PaneMesasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PaneMesasMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PaneMesasMouseExited
+
+    private void PaneMesasMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PaneMesasMouseMoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PaneMesasMouseMoved
+
     /**
      * @param args the command line arguments
      */
@@ -1115,6 +1163,11 @@ public class FrmReservas extends javax.swing.JFrame {
     public javax.swing.JFrame FrmGestionReservas;
     private javax.swing.JFrame FrmRegistrarUsuario;
     private javax.swing.JPanel Pane1;
+    private javax.swing.JPanel PaneInicio;
+    private javax.swing.JPanel PaneMesas;
+    private javax.swing.JPanel PanePlatillos;
+    private javax.swing.JPanel PaneReservas;
+    private javax.swing.JPanel PaneUsuarios;
     private javax.swing.JTabbedPane TablePane1;
     private javax.swing.JLabel User;
     private javax.swing.JLabel User1;
@@ -1165,16 +1218,17 @@ public class FrmReservas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
