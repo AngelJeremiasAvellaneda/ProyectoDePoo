@@ -1,19 +1,54 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package FormularioUsuario;
+
 import java.sql.*;
-import java.awt.*;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.awt.*; 
+import javax.swing.table.DefaultTableModel;
+
 public class FrmReservas extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmReservas
+     * 
      */
+    public static int idUsuarioSesion = 0; // Enlazar id de usuario :D
+    private static String nombreRestaurante = "";
+    private static String direccionRestaurante = "";
+    private static String telefonoRestaurante = "";
+    private static String horarioRestaurante = "";
+    
+    
     public FrmReservas() {
         initComponents();
+        cargarRoles();
         setLocationRelativeTo(null);
+        // Desactiva por defecto
+        txtNombreRestaurante.setEnabled(false);
+        txtDireccionRestaurante.setEnabled(false);
+        txtTelefonoRestaurante.setEnabled(false);
+        txtHorarioRestaurante.setEnabled(false);
+
+        // Vincula evento del ComboBox
+        cmbRol.addItemListener(new java.awt.event.ItemListener() {
+        @Override
+        public void itemStateChanged(java.awt.event.ItemEvent evt) {
+            String rolSeleccionado = cmbRol.getSelectedItem().toString();
+            boolean esAdmin = rolSeleccionado.equalsIgnoreCase("Administrador");
+
+            txtNombreRestaurante.setEnabled(esAdmin);
+            txtDireccionRestaurante.setEnabled(esAdmin);
+            txtTelefonoRestaurante.setEnabled(esAdmin);
+            txtHorarioRestaurante.setEnabled(esAdmin);
+
+            if (!esAdmin) {
+                txtNombreRestaurante.setText("");
+                txtDireccionRestaurante.setText("");
+                txtTelefonoRestaurante.setText("");
+                txtHorarioRestaurante.setText("");
+            }
+        }
+    });
+
     }
 
     /**
@@ -26,7 +61,7 @@ public class FrmReservas extends javax.swing.JFrame {
     private void initComponents() {
 
         FrmRegistrarUsuario = new javax.swing.JFrame();
-        jPanel4 = new javax.swing.JPanel();
+        PanelRegistrarUsuario = new javax.swing.JPanel();
         cmbRol = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -34,15 +69,23 @@ public class FrmReservas extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        txtUsuario = new javax.swing.JTextField();
-        txtNombres = new javax.swing.JTextField();
+        txtUser = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         txtApellidos = new javax.swing.JTextField();
-        txtContraseñaUser = new javax.swing.JTextField();
-        jLabel19 = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
         btnRegistrarUsuario = new javax.swing.JButton();
-        cmbSede = new javax.swing.JComboBox<>();
+        btnVolverLogin = new javax.swing.JButton();
+        txtNombreRestaurante = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel49 = new javax.swing.JLabel();
+        txtDireccionRestaurante = new javax.swing.JTextField();
+        txtTelefonoRestaurante = new javax.swing.JTextField();
+        txtHorarioRestaurante = new javax.swing.JTextField();
+        txtContraseña = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         FrmGestionReservas = new javax.swing.JFrame();
         jLabel26 = new javax.swing.JLabel();
@@ -69,32 +112,61 @@ public class FrmReservas extends javax.swing.JFrame {
         jLabel41 = new javax.swing.JLabel();
         jLabel40 = new javax.swing.JLabel();
         TablePane1 = new javax.swing.JTabbedPane();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
         Pane1 = new javax.swing.JPanel();
         jLabel30 = new javax.swing.JLabel();
-        jLabel42 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        tblReservasActivas = new javax.swing.JTable();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable5 = new javax.swing.JTable();
+        tblReservasTerminadas = new javax.swing.JTable();
         jLabel43 = new javax.swing.JLabel();
         jLabel45 = new javax.swing.JLabel();
         jLabel46 = new javax.swing.JLabel();
-        jLabel47 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jLabel44 = new javax.swing.JLabel();
-        jLabel48 = new javax.swing.JLabel();
+        txtBuscarCodigoReserva = new javax.swing.JTextField();
+        btnBuscarReserva = new javax.swing.JButton();
+        btnTerminarReserva = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
-        jLabel31 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaMesas = new javax.swing.JTable();
+        txtNumeroMesa = new javax.swing.JTextField();
+        txtCapacidadMesa = new javax.swing.JTextField();
+        btnAgregarMesa = new javax.swing.JButton();
+        btnHabilitarMesa = new javax.swing.JButton();
+        btnDeshabilitarMesa = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
-        jLabel32 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaPlatillos = new javax.swing.JTable();
+        txtBuscarPlatillo = new javax.swing.JTextField();
+        btnBuscarPlatillo = new javax.swing.JButton();
+        txtNombrePlatillo = new javax.swing.JTextField();
+        txtDescripcionPlatillo = new javax.swing.JTextField();
+        txtPrecioPlatillo = new javax.swing.JTextField();
+        btnAgregarPlatillo = new javax.swing.JButton();
+        btnHabilitarPlatillo = new javax.swing.JButton();
+        btnDeshabilitarPlatillo = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tablaUsuarios = new javax.swing.JTable();
+        btnEliminarUsuario = new javax.swing.JButton();
+        btnModificarUsuario = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
+        FrmModificarUsuario = new javax.swing.JFrame();
+        jPanel4 = new javax.swing.JPanel();
+        txtUserModificar = new javax.swing.JTextField();
+        txtNombreModificar = new javax.swing.JTextField();
+        txtApellidosModificar = new javax.swing.JTextField();
+        txtTelefonoModificar = new javax.swing.JTextField();
+        btnGuardarCambiosUsuario = new javax.swing.JButton();
+        btnBuscarUsuario = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tablaModificarUsuarios = new javax.swing.JTable();
+        cmbRolModificar = new javax.swing.JComboBox<>();
+        txtBuscarIdUsuario = new javax.swing.JTextField();
+        btnSalirModificarUsuario = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -102,8 +174,8 @@ public class FrmReservas extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         btnIniciarSesion = new javax.swing.JButton();
-        txtUser = new javax.swing.JTextField();
-        txtContraseña = new javax.swing.JTextField();
+        txtUserLogin = new javax.swing.JTextField();
+        txtContraseñaLogin = new javax.swing.JTextField();
         btnCancelar = new javax.swing.JButton();
         btnRegistrar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -111,9 +183,8 @@ public class FrmReservas extends javax.swing.JFrame {
         FrmRegistrarUsuario.setMinimumSize(new java.awt.Dimension(1200, 800));
         FrmRegistrarUsuario.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel4.setBackground(new java.awt.Color(0, 0, 0));
+        PanelRegistrarUsuario.setBackground(new java.awt.Color(0, 0, 0));
 
-        cmbRol.setBackground(new java.awt.Color(0, 0, 0));
         cmbRol.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         cmbRol.setForeground(new java.awt.Color(255, 255, 255));
         cmbRol.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
@@ -136,7 +207,7 @@ public class FrmReservas extends javax.swing.JFrame {
 
         jLabel15.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Sede:");
+        jLabel15.setText("Rol");
 
         jLabel16.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
@@ -146,16 +217,16 @@ public class FrmReservas extends javax.swing.JFrame {
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("Apellidos:");
 
-        txtUsuario.setBackground(new java.awt.Color(0, 0, 0));
-        txtUsuario.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        txtUser.setBackground(new java.awt.Color(0, 0, 0));
+        txtUser.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtUser.setForeground(new java.awt.Color(255, 255, 255));
 
-        txtNombres.setBackground(new java.awt.Color(0, 0, 0));
-        txtNombres.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtNombres.setForeground(new java.awt.Color(255, 255, 255));
-        txtNombres.addActionListener(new java.awt.event.ActionListener() {
+        txtNombre.setBackground(new java.awt.Color(0, 0, 0));
+        txtNombre.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtNombre.setForeground(new java.awt.Color(255, 255, 255));
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombresActionPerformed(evt);
+                txtNombreActionPerformed(evt);
             }
         });
 
@@ -167,17 +238,13 @@ public class FrmReservas extends javax.swing.JFrame {
         txtApellidos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txtApellidos.setForeground(new java.awt.Color(255, 255, 255));
 
-        txtContraseñaUser.setBackground(new java.awt.Color(0, 0, 0));
-        txtContraseñaUser.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtContraseñaUser.setForeground(new java.awt.Color(255, 255, 255));
+        txtTelefono.setBackground(new java.awt.Color(0, 0, 0));
+        txtTelefono.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtTelefono.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel19.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setText("Contraseña:");
-
-        txtTelefono.setBackground(new java.awt.Color(0, 0, 0));
-        txtTelefono.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtTelefono.setForeground(new java.awt.Color(255, 255, 255));
 
         btnRegistrarUsuario.setBackground(new java.awt.Color(0, 0, 0));
         btnRegistrarUsuario.setFont(new java.awt.Font("Yu Gothic Medium", 1, 18)); // NOI18N
@@ -195,102 +262,177 @@ public class FrmReservas extends javax.swing.JFrame {
             }
         });
 
-        cmbSede.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbSede.addActionListener(new java.awt.event.ActionListener() {
+        btnVolverLogin.setText("Volver");
+        btnVolverLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbSedeActionPerformed(evt);
+                btnVolverLoginActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(47, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtUsuario)
-                                    .addComponent(jLabel18)
-                                    .addComponent(jLabel15)
-                                    .addComponent(cmbRol, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(169, 169, 169)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtContraseñaUser, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel19)
-                                    .addComponent(jLabel16)
-                                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel14)
-                                    .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(169, 169, 169)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel17)))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(153, 153, 153)
-                                .addComponent(btnRegistrarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+        jLabel20.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setText("Nombre");
+
+        jLabel21.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setText("direccion");
+
+        jLabel22.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel22.setText("Telefono");
+
+        jLabel49.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 18)); // NOI18N
+        jLabel49.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel49.setText("Horario");
+
+        txtHorarioRestaurante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHorarioRestauranteActionPerformed(evt);
+            }
+        });
+
+        txtContraseña.setBackground(new java.awt.Color(0, 0, 0));
+        txtContraseña.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtContraseña.setForeground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout PanelRegistrarUsuarioLayout = new javax.swing.GroupLayout(PanelRegistrarUsuario);
+        PanelRegistrarUsuario.setLayout(PanelRegistrarUsuarioLayout);
+        PanelRegistrarUsuarioLayout.setHorizontalGroup(
+            PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelRegistrarUsuarioLayout.createSequentialGroup()
+                .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(PanelRegistrarUsuarioLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel13)
-                        .addGap(50, 50, 50))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cmbSede, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(353, 353, 353))
+                        .addGap(50, 50, 50))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PanelRegistrarUsuarioLayout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addComponent(btnRegistrarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(110, 110, 110)
+                        .addComponent(btnVolverLogin))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PanelRegistrarUsuarioLayout.createSequentialGroup()
+                        .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel15)
+                            .addGroup(PanelRegistrarUsuarioLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel14)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(PanelRegistrarUsuarioLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(cmbRol, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(29, 29, 29)
+                        .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PanelRegistrarUsuarioLayout.createSequentialGroup()
+                                .addComponent(jLabel16)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtHorarioRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(PanelRegistrarUsuarioLayout.createSequentialGroup()
+                                .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel19)
+                                    .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(PanelRegistrarUsuarioLayout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jLabel17)))
+                                .addGap(117, 117, 117)
+                                .addComponent(jLabel20)
+                                .addGap(27, 27, 27)
+                                .addComponent(txtNombreRestaurante))
+                            .addGroup(PanelRegistrarUsuarioLayout.createSequentialGroup()
+                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(PanelRegistrarUsuarioLayout.createSequentialGroup()
+                        .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PanelRegistrarUsuarioLayout.createSequentialGroup()
+                                .addComponent(jLabel18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel21)
+                                .addGap(28, 28, 28))
+                            .addGroup(PanelRegistrarUsuarioLayout.createSequentialGroup()
+                                .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(422, 422, 422)
+                                .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel49)
+                                    .addComponent(jLabel22))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)))
+                        .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTelefonoRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDireccionRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(73, 73, 73))
+            .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PanelRegistrarUsuarioLayout.createSequentialGroup()
+                    .addGap(308, 308, 308)
+                    .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(542, Short.MAX_VALUE)))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel14)
+        PanelRegistrarUsuarioLayout.setVerticalGroup(
+            PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelRegistrarUsuarioLayout.createSequentialGroup()
+                .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelRegistrarUsuarioLayout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel17))
                         .addGap(6, 6, 6)
-                        .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)))
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel18)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel19)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtContraseñaUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)))
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
-                    .addComponent(jLabel16))
+                        .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(PanelRegistrarUsuarioLayout.createSequentialGroup()
+                        .addGap(146, 146, 146)
+                        .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel20)
+                            .addComponent(txtNombreRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(cmbSede, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(btnRegistrarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41))
+                .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel18)
+                    .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel21)
+                        .addComponent(txtDireccionRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel19)
+                .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelRegistrarUsuarioLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PanelRegistrarUsuarioLayout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTelefonoRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel22))))
+                .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelRegistrarUsuarioLayout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel16)
+                            .addComponent(jLabel49)
+                            .addComponent(txtHorarioRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(PanelRegistrarUsuarioLayout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cmbRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRegistrarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVolverLogin))
+                .addGap(35, 35, 35))
+            .addGroup(PanelRegistrarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelRegistrarUsuarioLayout.createSequentialGroup()
+                    .addContainerGap(289, Short.MAX_VALUE)
+                    .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(240, 240, 240)))
         );
 
-        FrmRegistrarUsuario.getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 840, 560));
+        FrmRegistrarUsuario.getContentPane().add(PanelRegistrarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 1130, 560));
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/FondoRegister.png"))); // NOI18N
         FrmRegistrarUsuario.getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -298,10 +440,10 @@ public class FrmReservas extends javax.swing.JFrame {
         FrmGestionReservas.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Logo.png"))); // NOI18N
-        FrmGestionReservas.getContentPane().add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, 140, 100));
+        FrmGestionReservas.getContentPane().add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, 140, 100));
 
         jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/FondoSuperior.jpg"))); // NOI18N
-        FrmGestionReservas.getContentPane().add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 0, 850, 110));
+        FrmGestionReservas.getContentPane().add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 0, 870, 150));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -468,6 +610,11 @@ public class FrmReservas extends javax.swing.JFrame {
         jPanel5.add(PaneMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 350, 80));
 
         PanePlatillos.setBackground(new java.awt.Color(253, 249, 249));
+        PanePlatillos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PanePlatillosMouseClicked(evt);
+            }
+        });
 
         jLabel35.setFont(new java.awt.Font("Segoe UI Light", 1, 22)); // NOI18N
         jLabel35.setForeground(new java.awt.Color(181, 88, 19));
@@ -501,6 +648,11 @@ public class FrmReservas extends javax.swing.JFrame {
         jPanel5.add(PanePlatillos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 530, 350, 80));
 
         PaneUsuarios.setBackground(new java.awt.Color(253, 249, 249));
+        PaneUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PaneUsuariosMouseClicked(evt);
+            }
+        });
 
         jLabel41.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/como.png"))); // NOI18N
 
@@ -537,268 +689,6 @@ public class FrmReservas extends javax.swing.JFrame {
 
         TablePane1.setBackground(new java.awt.Color(255, 255, 255));
 
-        Pane1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel30.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
-        jLabel30.setForeground(new java.awt.Color(186, 72, 15));
-        jLabel30.setText("Terminados");
-
-        jLabel42.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
-        jLabel42.setForeground(new java.awt.Color(186, 72, 15));
-        jLabel42.setText("Ocupados");
-
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
-            }
-        ));
-        jScrollPane4.setViewportView(jTable2);
-
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
-            }
-        ));
-        jScrollPane5.setViewportView(jTable4);
-
-        jTable5.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
-            }
-        ));
-        jScrollPane6.setViewportView(jTable5);
-
-        jLabel43.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
-        jLabel43.setForeground(new java.awt.Color(186, 72, 15));
-        jLabel43.setText("Reservas");
-
-        jLabel45.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/grupo.png"))); // NOI18N
-
-        jLabel46.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/grupo.png"))); // NOI18N
-
-        jLabel47.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/grupo.png"))); // NOI18N
-
-        jLabel23.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel23.setText("0");
-
-        jLabel44.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel44.setText("0");
-
-        jLabel48.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel48.setText("0");
-
-        javax.swing.GroupLayout Pane1Layout = new javax.swing.GroupLayout(Pane1);
-        Pane1.setLayout(Pane1Layout);
-        Pane1Layout.setHorizontalGroup(
-            Pane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Pane1Layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addGroup(Pane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(Pane1Layout.createSequentialGroup()
-                        .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel47)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel48))
-                    .addGroup(Pane1Layout.createSequentialGroup()
-                        .addComponent(jLabel43)
-                        .addGap(125, 125, 125)
-                        .addComponent(jLabel46)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel23))
-                    .addGroup(Pane1Layout.createSequentialGroup()
-                        .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel45)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel44))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE)
-                    .addComponent(jScrollPane6)
-                    .addComponent(jScrollPane4))
-                .addContainerGap(112, Short.MAX_VALUE))
-        );
-        Pane1Layout.setVerticalGroup(
-            Pane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Pane1Layout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addGroup(Pane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel43)
-                    .addComponent(jLabel46)
-                    .addComponent(jLabel23))
-                .addGap(17, 17, 17)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                .addGroup(Pane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(Pane1Layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addComponent(jLabel44))
-                    .addComponent(jLabel45))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
-                .addGroup(Pane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(Pane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel48)
-                        .addComponent(jLabel47)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
-        );
-
-        TablePane1.addTab("tab1", Pane1);
-
-        jLabel31.setText("WEBO");
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(235, 235, 235)
-                .addComponent(jLabel31)
-                .addContainerGap(582, Short.MAX_VALUE))
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(295, 295, 295)
-                .addComponent(jLabel31)
-                .addContainerGap(354, Short.MAX_VALUE))
-        );
-
-        TablePane1.addTab("tab2", jPanel7);
-
-        jLabel32.setText("RATA");
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(163, 163, 163)
-                .addComponent(jLabel32)
-                .addContainerGap(658, Short.MAX_VALUE))
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(153, 153, 153)
-                .addComponent(jLabel32)
-                .addContainerGap(496, Short.MAX_VALUE))
-        );
-
-        TablePane1.addTab("tab3", jPanel8);
-
-        jLabel7.setText("jLabel7");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(334, 334, 334)
-                .addComponent(jLabel7)
-                .addContainerGap(479, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(204, 204, 204)
-                .addComponent(jLabel7)
-                .addContainerGap(445, Short.MAX_VALUE))
-        );
-
-        TablePane1.addTab("tab4", jPanel1);
-
-        jLabel8.setText("jLabel8");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(420, Short.MAX_VALUE)
-                .addComponent(jLabel8)
-                .addGap(393, 393, 393))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(341, Short.MAX_VALUE)
-                .addComponent(jLabel8)
-                .addGap(308, 308, 308))
-        );
-
-        TablePane1.addTab("tab5", jPanel2);
-
         jLabel9.setText("jLabel9");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -820,7 +710,521 @@ public class FrmReservas extends javax.swing.JFrame {
 
         TablePane1.addTab("tab6", jPanel6);
 
-        FrmGestionReservas.getContentPane().add(TablePane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, 850, 700));
+        Pane1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel30.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(186, 72, 15));
+        jLabel30.setText("Terminados");
+
+        tblReservasActivas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
+            }
+        ));
+        jScrollPane5.setViewportView(tblReservasActivas);
+
+        tblReservasTerminadas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
+            }
+        ));
+        jScrollPane6.setViewportView(tblReservasTerminadas);
+
+        jLabel43.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18)); // NOI18N
+        jLabel43.setForeground(new java.awt.Color(186, 72, 15));
+        jLabel43.setText("Reservas");
+
+        jLabel45.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/grupo.png"))); // NOI18N
+
+        jLabel46.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/grupo.png"))); // NOI18N
+
+        jLabel23.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel23.setText("0");
+
+        jLabel44.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel44.setText("0");
+
+        btnBuscarReserva.setText("Buscar");
+        btnBuscarReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarReservaActionPerformed(evt);
+            }
+        });
+
+        btnTerminarReserva.setText("FinalizarReserva");
+        btnTerminarReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTerminarReservaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout Pane1Layout = new javax.swing.GroupLayout(Pane1);
+        Pane1.setLayout(Pane1Layout);
+        Pane1Layout.setHorizontalGroup(
+            Pane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Pane1Layout.createSequentialGroup()
+                .addGroup(Pane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Pane1Layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addGroup(Pane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(Pane1Layout.createSequentialGroup()
+                                .addComponent(jLabel43)
+                                .addGap(125, 125, 125)
+                                .addComponent(jLabel46)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel23))
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE)
+                            .addComponent(jScrollPane6)
+                            .addGroup(Pane1Layout.createSequentialGroup()
+                                .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel45)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel44))))
+                    .addGroup(Pane1Layout.createSequentialGroup()
+                        .addGap(171, 171, 171)
+                        .addComponent(txtBuscarCodigoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
+                        .addComponent(btnBuscarReserva)
+                        .addGap(40, 40, 40)
+                        .addComponent(btnTerminarReserva)))
+                .addContainerGap(100, Short.MAX_VALUE))
+        );
+        Pane1Layout.setVerticalGroup(
+            Pane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Pane1Layout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addGroup(Pane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel43)
+                    .addComponent(jLabel46)
+                    .addComponent(jLabel23))
+                .addGap(17, 17, 17)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addGroup(Pane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBuscarCodigoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarReserva)
+                    .addComponent(btnTerminarReserva))
+                .addGap(42, 42, 42)
+                .addGroup(Pane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Pane1Layout.createSequentialGroup()
+                        .addGroup(Pane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(Pane1Layout.createSequentialGroup()
+                                .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pane1Layout.createSequentialGroup()
+                                .addComponent(jLabel44)
+                                .addGap(18, 18, 18)))
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel45))
+                .addContainerGap(145, Short.MAX_VALUE))
+        );
+
+        TablePane1.addTab("tab1", Pane1);
+
+        tablaMesas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID", "N° de mesa", "Capacidad de Mesa", "Estado"
+            }
+        ));
+        jScrollPane1.setViewportView(tablaMesas);
+
+        btnAgregarMesa.setText("Agregar");
+        btnAgregarMesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarMesaActionPerformed(evt);
+            }
+        });
+
+        btnHabilitarMesa.setText("Habilitar Mesa");
+        btnHabilitarMesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHabilitarMesaActionPerformed(evt);
+            }
+        });
+
+        btnDeshabilitarMesa.setText("Deshabilitar");
+        btnDeshabilitarMesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeshabilitarMesaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGap(297, 297, 297)
+                                .addComponent(btnHabilitarMesa)
+                                .addGap(60, 60, 60)
+                                .addComponent(btnDeshabilitarMesa))))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(92, 92, 92)
+                        .addComponent(txtNumeroMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(txtCapacidadMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(116, 116, 116)
+                        .addComponent(btnAgregarMesa)))
+                .addContainerGap(73, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(67, 67, 67)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(btnHabilitarMesa))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDeshabilitarMesa)))
+                .addGap(111, 111, 111)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNumeroMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCapacidadMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAgregarMesa))
+                .addContainerGap(211, Short.MAX_VALUE))
+        );
+
+        TablePane1.addTab("tab2", jPanel7);
+
+        tablaPlatillos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tablaPlatillos);
+
+        btnBuscarPlatillo.setText("buscar");
+        btnBuscarPlatillo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarPlatilloActionPerformed(evt);
+            }
+        });
+
+        btnAgregarPlatillo.setText("Agregar");
+        btnAgregarPlatillo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarPlatilloActionPerformed(evt);
+            }
+        });
+
+        btnHabilitarPlatillo.setText("Habilitar");
+        btnHabilitarPlatillo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHabilitarPlatilloActionPerformed(evt);
+            }
+        });
+
+        btnDeshabilitarPlatillo.setText("Deshabilitar");
+        btnDeshabilitarPlatillo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeshabilitarPlatilloActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(116, 116, 116)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnHabilitarPlatillo)
+                            .addComponent(btnDeshabilitarPlatillo)))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(txtBuscarPlatillo, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47)
+                        .addComponent(btnBuscarPlatillo))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtNombrePlatillo, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                            .addComponent(txtDescripcionPlatillo)
+                            .addComponent(txtPrecioPlatillo))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAgregarPlatillo)))
+                .addContainerGap(112, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addComponent(btnHabilitarPlatillo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDeshabilitarPlatillo)))
+                .addGap(43, 43, 43)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBuscarPlatillo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarPlatillo))
+                .addGap(86, 86, 86)
+                .addComponent(txtNombrePlatillo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDescripcionPlatillo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAgregarPlatillo))
+                .addGap(37, 37, 37)
+                .addComponent(txtPrecioPlatillo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(199, Short.MAX_VALUE))
+        );
+
+        TablePane1.addTab("tab3", jPanel8);
+
+        tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(tablaUsuarios);
+
+        btnEliminarUsuario.setText("Eliminar");
+        btnEliminarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarUsuarioActionPerformed(evt);
+            }
+        });
+
+        btnModificarUsuario.setText("Modificar");
+        btnModificarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarUsuarioActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(54, 54, 54)
+                        .addComponent(btnEliminarUsuario))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(365, 365, 365)
+                        .addComponent(btnModificarUsuario)))
+                .addContainerGap(215, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(109, 109, 109)
+                        .addComponent(btnEliminarUsuario)))
+                .addGap(100, 100, 100)
+                .addComponent(btnModificarUsuario)
+                .addContainerGap(327, Short.MAX_VALUE))
+        );
+
+        TablePane1.addTab("tab4", jPanel1);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(457, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addGap(393, 393, 393))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(357, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addGap(308, 308, 308))
+        );
+
+        TablePane1.addTab("tab5", jPanel2);
+
+        FrmGestionReservas.getContentPane().add(TablePane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 110, 850, 700));
+
+        btnGuardarCambiosUsuario.setText("Guardar Cambios");
+        btnGuardarCambiosUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarCambiosUsuarioActionPerformed(evt);
+            }
+        });
+
+        btnBuscarUsuario.setText("Buscar Usuario");
+        btnBuscarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarUsuarioActionPerformed(evt);
+            }
+        });
+
+        tablaModificarUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(tablaModificarUsuarios);
+
+        cmbRolModificar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnSalirModificarUsuario.setText("Salir");
+        btnSalirModificarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirModificarUsuarioActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(75, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscarIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbRolModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(btnBuscarUsuario)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtUserModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                                    .addComponent(txtNombreModificar)
+                                    .addComponent(txtApellidosModificar)
+                                    .addComponent(txtTelefonoModificar))))))
+                .addGap(78, 78, 78))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addComponent(btnGuardarCambiosUsuario)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSalirModificarUsuario)
+                .addGap(146, 146, 146))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBuscarIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarUsuario))
+                .addGap(33, 33, 33)
+                .addComponent(txtUserModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtNombreModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtApellidosModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtTelefonoModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cmbRolModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardarCambiosUsuario)
+                    .addComponent(btnSalirModificarUsuario))
+                .addGap(43, 43, 43))
+        );
+
+        javax.swing.GroupLayout FrmModificarUsuarioLayout = new javax.swing.GroupLayout(FrmModificarUsuario.getContentPane());
+        FrmModificarUsuario.getContentPane().setLayout(FrmModificarUsuarioLayout);
+        FrmModificarUsuarioLayout.setHorizontalGroup(
+            FrmModificarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        FrmModificarUsuarioLayout.setVerticalGroup(
+            FrmModificarUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1200, 800));
@@ -857,7 +1261,7 @@ public class FrmReservas extends javax.swing.JFrame {
             }
         });
 
-        txtUser.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
+        txtUserLogin.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
 
         btnCancelar.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Cancelar.png"))); // NOI18N
@@ -901,9 +1305,9 @@ public class FrmReservas extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(138, 138, 138)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtContraseñaLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)
-                            .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtUserLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(256, 256, 256)
@@ -927,11 +1331,11 @@ public class FrmReservas extends javax.swing.JFrame {
                         .addGap(64, 64, 64)))
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtUserLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtContraseñaLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(89, 89, 89)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnIniciarSesion)
@@ -953,7 +1357,85 @@ public class FrmReservas extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbRolActionPerformed
 
     private void btnRegistrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarUsuarioActionPerformed
-        
+        String user = txtUser.getText().trim();
+        String passw = txtContraseña.getText().trim();
+        String rol = cmbRol.getSelectedItem() != null ? cmbRol.getSelectedItem().toString() : "";
+        String nombre = txtNombre.getText().trim();
+        String apellidos = txtApellidos.getText().trim();
+        String telefono = txtTelefono.getText().trim();
+
+        String nombreRest = txtNombreRestaurante.getText().trim();
+        String direccionRest = txtDireccionRestaurante.getText().trim();
+        String telefonoRest = txtTelefonoRestaurante.getText().trim();
+        String horarioRest = txtHorarioRestaurante.getText().trim();
+
+        if (user.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese usuario");
+            return;
+        }
+        if (passw.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese contraseña");
+            return;
+        }
+        if (rol.isEmpty() || rol.equalsIgnoreCase("Seleccione rol")) {
+            JOptionPane.showMessageDialog(null, "Seleccione un rol válido");
+            return;
+        }
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese nombre");
+            return;
+        }
+        if (apellidos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese apellidos");
+            return;
+        }
+        if (telefono.isEmpty() || !telefono.matches("\\d+")) {
+            JOptionPane.showMessageDialog(null, "Teléfono inválido");
+            return;
+        }
+
+        if (rol.equalsIgnoreCase("Administrador")) {
+            if (nombreRest.isEmpty() || direccionRest.isEmpty() || telefonoRest.isEmpty() || horarioRest.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Complete todos los campos del restaurante.");
+                return;
+            }
+            if (!telefonoRest.matches("\\d+")) {
+                JOptionPane.showMessageDialog(null, "Teléfono del restaurante inválido.");
+                return;
+            }
+
+            // Guarda en variable global
+            nombreRestaurante = nombreRest;
+            direccionRestaurante = direccionRest;
+            telefonoRestaurante = telefonoRest;
+            horarioRestaurante = horarioRest;
+        }
+
+        // Registra usuario
+        try {
+            cConnection cn = new cConnection();
+            Connection con = cn.ObtenerConexion();
+            String sql = "INSERT INTO Usuario (usuario, contraseña, rol, nombre, apellidos, telefono) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, user);
+            ps.setString(2, passw);
+            ps.setString(3, rol);
+            ps.setString(4, nombre);
+            ps.setString(5, apellidos);
+            ps.setString(6, telefono);
+
+            int filas = ps.executeUpdate();
+            if (filas > 0) {
+                JOptionPane.showMessageDialog(null, "Usuario registrado correctamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo registrar el usuario");
+            }
+
+            ps.close();
+            con.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al registrar usuario: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnRegistrarUsuarioActionPerformed
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
@@ -964,17 +1446,17 @@ public class FrmReservas extends javax.swing.JFrame {
 
         System.out.println("Botón presionado");
 
-        String user = txtUser.getText().trim();
-        String passw = txtContraseña.getText().trim();
+        String user = txtUserLogin.getText().trim();
+        String passw = txtContraseñaLogin.getText().trim();
 
         if (user.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese nombre de usuario");
-            txtUser.requestFocus();
+            txtUserLogin.requestFocus();
             return;
         }
         if (passw.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese contraseña");
-            txtContraseña.requestFocus();
+            txtContraseñaLogin.requestFocus();
             return;
         }
 
@@ -991,9 +1473,10 @@ public class FrmReservas extends javax.swing.JFrame {
             if (rs.next()) {
                 JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso. Bienvenido " + rs.getString("nombre"));
 
-                this.setVisible(false); // Oculta login
+                this.setVisible(false);
+                idUsuarioSesion = rs.getInt("id_usuario");
+                System.out.println("idUsuarioSesion: " + idUsuarioSesion);
 
-                // Aca se cambia de Formulario
                 final FormSplash sp = new FormSplash();
                 sp.setVisible(true);
 
@@ -1008,8 +1491,6 @@ public class FrmReservas extends javax.swing.JFrame {
                             else if (i == 90) sp.lblEstado.setText("Iniciando Aplicación...");
                             else if (i == 100) {
                                 sp.setVisible(false);
-
-                                // Aca se cambia de Formulario
                                 FrmGestionReservas.setSize(1200, 800);
                                 FrmGestionReservas.setLocationRelativeTo(null);
                                 FrmGestionReservas.setVisible(true);
@@ -1028,9 +1509,9 @@ public class FrmReservas extends javax.swing.JFrame {
 
             } else {
                 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
-                txtUser.setText("");
-                txtContraseña.setText("");
-                txtUser.requestFocus();
+                txtUserLogin.setText("");
+                txtContraseñaLogin.setText("");
+                txtUserLogin.requestFocus();
             }
 
         } catch (SQLException e) {
@@ -1066,41 +1547,16 @@ public class FrmReservas extends javax.swing.JFrame {
         FrmRegistrarUsuario.setSize(1200, 800);
         FrmRegistrarUsuario.setLocationRelativeTo(null);
         FrmRegistrarUsuario.setVisible(true);
+        
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
-    private void txtNombresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombresActionPerformed
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombresActionPerformed
-
-    private void cmbSedeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSedeActionPerformed
-        cConnection cn = new cConnection(); 
-        Connection con = cn.ObtenerConexion();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-            String query = "SELECT nombre FROM sede ORDER BY nombre";
-            ps = con.prepareStatement(query);
-            rs = ps.executeQuery();
-
-            while (rs.next()) {
-                String nombreSede = rs.getString("nombre");
-                cmbSede.addItem(nombreSede);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al cargar sedes:\n" + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (con != null) con.close();
-            } catch (SQLException ex) {
-                System.out.println("Error cerrando conexión: " + ex.getMessage());
-            }
-        }
-    }//GEN-LAST:event_cmbSedeActionPerformed
+    }//GEN-LAST:event_txtNombreActionPerformed
 
     private void PaneReservasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PaneReservasMouseClicked
+        cargarReservasActivas();
+        cargarReservasTerminadas(); 
         TablePane1.setSelectedIndex(1);
     }//GEN-LAST:event_PaneReservasMouseClicked
 
@@ -1113,7 +1569,8 @@ public class FrmReservas extends javax.swing.JFrame {
     }//GEN-LAST:event_PaneReservasMouseMoved
 
     private void PaneMesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PaneMesasMouseClicked
-        // TODO add your handling code here:
+        cargarMesas();
+        TablePane1.setSelectedIndex(2);
     }//GEN-LAST:event_PaneMesasMouseClicked
 
     private void PaneMesasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PaneMesasMouseExited
@@ -1124,9 +1581,505 @@ public class FrmReservas extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_PaneMesasMouseMoved
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btnVolverLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverLoginActionPerformed
+  
+        FrmReservas register = new FrmReservas();
+        FrmRegistrarUsuario.setVisible(false);
+        register.setLocationRelativeTo(null);
+        register.setVisible(true);
+    }//GEN-LAST:event_btnVolverLoginActionPerformed
+
+    private void txtHorarioRestauranteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHorarioRestauranteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHorarioRestauranteActionPerformed
+
+    private void btnBuscarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarReservaActionPerformed
+        String codigo = txtBuscarCodigoReserva.getText().trim();
+        if (codigo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un código de reserva.");
+            return;
+        }
+
+        try (Connection con = new cConnection().ObtenerConexion()) {
+            String sql = "SELECT r.id_reserva, r.codigo_reserva, c.nombre || ' ' || c.apellidos AS cliente, m.numero_mesa, r.estado " +
+                         "FROM Reserva r JOIN Cliente c ON r.id_cliente = c.id_cliente " +
+                         "JOIN Mesa m ON r.id_mesa = m.id_mesa " +
+                         "WHERE r.codigo_reserva = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, codigo);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(this,
+                    "Reserva encontrada:\n" +
+                    "ID: " + rs.getInt("id_reserva") +
+                    "\nCliente: " + rs.getString("cliente") +
+                    "\nMesa: " + rs.getInt("numero_mesa") +
+                    "\nEstado: " + rs.getString("estado")
+                );
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró la reserva.");
+            }
+
+            rs.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error buscando reserva: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnBuscarReservaActionPerformed
+
+    private void btnTerminarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTerminarReservaActionPerformed
+        String codigo = txtBuscarCodigoReserva.getText().trim();
+        if (codigo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un código de reserva.");
+            return;
+        }
+
+        try (Connection con = new cConnection().ObtenerConexion()) {
+            con.setAutoCommit(false);
+
+            // Cambiar estado reserva
+            String sqlUpdateReserva = "UPDATE Reserva SET estado = 'Terminado' WHERE codigo_reserva = ?";
+            PreparedStatement psReserva = con.prepareStatement(sqlUpdateReserva);
+            psReserva.setString(1, codigo);
+            int filas = psReserva.executeUpdate();
+
+            if (filas <= 0) {
+                JOptionPane.showMessageDialog(this, "No se encontró la reserva.");
+                con.rollback();
+                return;
+            }
+
+            // Liberar mesa
+            String sqlMesa = "SELECT id_mesa FROM Reserva WHERE codigo_reserva = ?";
+            PreparedStatement psMesa = con.prepareStatement(sqlMesa);
+            psMesa.setString(1, codigo);
+            ResultSet rs = psMesa.executeQuery();
+
+            if (rs.next()) {
+                int idMesa = rs.getInt("id_mesa");
+                String sqlUpdateMesa = "UPDATE Mesa SET estado = 'Disponible' WHERE id_mesa = ?";
+                PreparedStatement psLiberar = con.prepareStatement(sqlUpdateMesa);
+                psLiberar.setInt(1, idMesa);
+                psLiberar.executeUpdate();
+                psLiberar.close();
+            }
+
+            rs.close();
+            psMesa.close();
+            psReserva.close();
+
+            con.commit();
+
+            JOptionPane.showMessageDialog(this, "Reserva terminada y mesa liberada.");
+
+            cargarReservasActivas();
+            cargarReservasTerminadas();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error terminando reserva: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnTerminarReservaActionPerformed
+
+    private void PanePlatillosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PanePlatillosMouseClicked
+        cargarPlatillos();
+        TablePane1.setSelectedIndex(3);
+    }//GEN-LAST:event_PanePlatillosMouseClicked
+
+    private void btnAgregarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMesaActionPerformed
+        int numeroMesa = Integer.parseInt(txtNumeroMesa.getText().trim());
+        int capacidadMesa = Integer.parseInt(txtCapacidadMesa.getText().trim());
+
+        if (!validarNuevaMesa(numeroMesa, capacidadMesa)) {
+            return; //  Detener si falla
+        }
+
+        try (Connection con = new cConnection().ObtenerConexion()) {
+            String sql = "INSERT INTO Mesa (numero_mesa, capacidad, estado) VALUES (?, ?, 'Disponible')";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, numeroMesa);
+            ps.setInt(2, capacidadMesa);
+            ps.executeUpdate();
+            ps.close();
+
+            JOptionPane.showMessageDialog(this, "Mesa registrada correctamente.");
+            cargarMesas();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al registrar mesa: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnAgregarMesaActionPerformed
+
+    private void btnHabilitarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHabilitarMesaActionPerformed
+        int fila = tablaMesas.getSelectedRow();
+        if (fila < 0) {
+            JOptionPane.showMessageDialog(this, "Seleccione una mesa primero.");
+            return;
+        }
+
+        Object valorId = tablaMesas.getValueAt(fila, 0); // Columna ID
+        Object valorEstado = tablaMesas.getValueAt(fila, 3); // Columna Estado
+
+        if (valorId == null || valorEstado == null) {
+            JOptionPane.showMessageDialog(this, "Error: Datos incompletos en la fila seleccionada.");
+            return;
+        }
+
+        String estado = valorEstado.toString();
+        if (estado.equalsIgnoreCase("Ocupado")) {
+            JOptionPane.showMessageDialog(this, "No se puede habilitar una mesa que está OCUPADA.");
+            return;
+        }
+
+        if (estado.equalsIgnoreCase("Disponible")) {
+            JOptionPane.showMessageDialog(this, "Esta mesa ya está disponible.");
+            return;
+        }
+
+        int idMesa = Integer.parseInt(valorId.toString());
+
+        try (Connection con = new cConnection().ObtenerConexion()) {
+            String sql = "UPDATE Mesa SET estado = 'Disponible' WHERE id_mesa = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idMesa);
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al habilitar mesa: " + e.getMessage());
+        }
+
+        cargarMesas(); // Refresca tabla
+    }//GEN-LAST:event_btnHabilitarMesaActionPerformed
+
+    private void btnDeshabilitarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshabilitarMesaActionPerformed
+        int fila = tablaMesas.getSelectedRow();
+        if (fila < 0) {
+            JOptionPane.showMessageDialog(this, "Seleccione una mesa primero.");
+            return;
+        }
+
+        Object valorId = tablaMesas.getValueAt(fila, 0); // Columna ID
+        Object valorEstado = tablaMesas.getValueAt(fila, 3); // Columna Estado
+
+        if (valorId == null || valorEstado == null) {
+            JOptionPane.showMessageDialog(this, "Error: Datos incompletos en la fila seleccionada.");
+            return;
+        }
+
+        String estado = valorEstado.toString();
+        if (estado.equalsIgnoreCase("Ocupado")) {
+            JOptionPane.showMessageDialog(this, "No se puede deshabilitar una mesa OCUPADA.");
+            return;
+        }
+
+        if (estado.equalsIgnoreCase("Deshabilitada")) {
+            JOptionPane.showMessageDialog(this, "Esta mesa ya está deshabilitada.");
+            return;
+        }
+
+        int idMesa = Integer.parseInt(valorId.toString());
+
+        try (Connection con = new cConnection().ObtenerConexion()) {
+            String sql = "UPDATE Mesa SET estado = 'Deshabilitada' WHERE id_mesa = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idMesa);
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al deshabilitar mesa: " + e.getMessage());
+        }
+
+        cargarMesas(); // Refresca tabla
+    }//GEN-LAST:event_btnDeshabilitarMesaActionPerformed
+
+    private void btnAgregarPlatilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarPlatilloActionPerformed
+        String nombre = txtNombrePlatillo.getText().trim();
+        String precioStr = txtPrecioPlatillo.getText().trim();
+
+        if (nombre.isEmpty() || precioStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Complete nombre y precio.");
+            return;
+        }
+
+        double precio;
+        try {
+            precio = Double.parseDouble(precioStr);
+            if (precio <= 0) {
+                JOptionPane.showMessageDialog(this, "Precio debe ser positivo.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Precio inválido.");
+            return;
+        }
+
+        try (Connection con = new cConnection().ObtenerConexion()) {
+            String sql = "INSERT INTO Platillo (nombre, precio, estado) VALUES (?, ?, 'Disponible')";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, nombre);
+            ps.setDouble(2, precio);
+            ps.executeUpdate();
+            ps.close();
+            JOptionPane.showMessageDialog(this, "Platillo agregado correctamente.");
+            cargarPlatillos();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al agregar: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnAgregarPlatilloActionPerformed
+
+    private void btnBuscarPlatilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPlatilloActionPerformed
+        String criterio = txtBuscarPlatillo.getText().trim();
+        if (criterio.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese ID o nombre a buscar.");
+            return;
+        }
+
+        DefaultTableModel modelo = (DefaultTableModel) tablaPlatillos.getModel();
+        modelo.setRowCount(0);
+
+        try (Connection con = new cConnection().ObtenerConexion()) {
+            String sql;
+            PreparedStatement ps;
+
+            if (criterio.matches("\\d+")) {
+                sql = "SELECT * FROM Platillo WHERE id_platillo = ?";
+                ps = con.prepareStatement(sql);
+                ps.setInt(1, Integer.parseInt(criterio));
+            } else {
+                sql = "SELECT * FROM Platillo WHERE nombre LIKE ?";
+                ps = con.prepareStatement(sql);
+                ps.setString(1, "%" + criterio + "%");
+            }
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id_platillo");
+                String nombre = rs.getString("nombre");
+                double precio = rs.getDouble("precio");
+                String estado = rs.getString("estado");
+                modelo.addRow(new Object[]{id, nombre, precio, estado});
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al buscar: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnBuscarPlatilloActionPerformed
+
+    private void btnHabilitarPlatilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHabilitarPlatilloActionPerformed
+        int fila = tablaPlatillos.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un platillo.");
+            return;
+        }
+
+        String estado = tablaPlatillos.getValueAt(fila, 3).toString();
+        if (estado.equalsIgnoreCase("Disponible")) {
+            JOptionPane.showMessageDialog(this, "Ya está disponible.");
+            return;
+        }
+
+        int id = Integer.parseInt(tablaPlatillos.getValueAt(fila, 0).toString());
+
+        try (Connection con = new cConnection().ObtenerConexion()) {
+            String sql = "UPDATE Platillo SET estado = 'Disponible' WHERE id_platillo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps.close();
+            JOptionPane.showMessageDialog(this, "Platillo habilitado.");
+            cargarPlatillos();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al habilitar: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnHabilitarPlatilloActionPerformed
+
+    private void btnDeshabilitarPlatilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshabilitarPlatilloActionPerformed
+        int fila = tablaPlatillos.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un platillo.");
+            return;
+        }
+
+        String estado = tablaPlatillos.getValueAt(fila, 3).toString();
+        if (estado.equalsIgnoreCase("No Disponible")) {
+            JOptionPane.showMessageDialog(this, "Ya está deshabilitado.");
+            return;
+        }
+
+        int id = Integer.parseInt(tablaPlatillos.getValueAt(fila, 0).toString());
+
+        try (Connection con = new cConnection().ObtenerConexion()) {
+            String sql = "UPDATE Platillo SET estado = 'No Disponible' WHERE id_platillo = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps.close();
+            JOptionPane.showMessageDialog(this, "Platillo deshabilitado.");
+            cargarPlatillos();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al deshabilitar: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnDeshabilitarPlatilloActionPerformed
+
+    private void btnEliminarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarUsuarioActionPerformed
+        int fila = tablaUsuarios.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un usuario para eliminar.");
+            return;
+        }
+
+        int confirmar = JOptionPane.showConfirmDialog(this, "¿Está seguro de eliminar este usuario?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (confirmar != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        int idUsuario = Integer.parseInt(tablaUsuarios.getValueAt(fila, 0).toString());
+
+        try (Connection con = new cConnection().ObtenerConexion()) {
+            String sql = "DELETE FROM Usuario WHERE id_usuario = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idUsuario);
+
+            int filasAfectadas = ps.executeUpdate();
+            if (filasAfectadas > 0) {
+                JOptionPane.showMessageDialog(this, "Usuario eliminado correctamente.");
+                cargarUsuarios(); // <-- método para recargar la tabla
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo eliminar el usuario.");
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error eliminando usuario: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnEliminarUsuarioActionPerformed
+
+    private void btnModificarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarUsuarioActionPerformed
+        cargarRolesModificar(); // <-- ¡Esto carga el combo box al abrir!
+        cargarTablaModificarUsuarios(); // Si quieres ver la tabla de entrada
+        cargarTablaModificarUsuarios();
+        FrmModificarUsuario.setSize(548, 619);
+        FrmModificarUsuario.setLocationRelativeTo(null);
+        FrmModificarUsuario.setVisible(true);
+    }//GEN-LAST:event_btnModificarUsuarioActionPerformed
+
+    private void btnBuscarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarUsuarioActionPerformed
+        String idBuscar = txtBuscarIdUsuario.getText().trim();
+
+        if (idBuscar.isEmpty() || !idBuscar.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Ingrese un ID válido.");
+            return;
+        }
+
+        int idUsuario = Integer.parseInt(idBuscar);
+
+        try (Connection con = new cConnection().ObtenerConexion()) {
+            String sql = "SELECT * FROM Usuario WHERE id_usuario = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idUsuario);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                txtUserModificar.setText(rs.getString("usuario"));
+                txtNombreModificar.setText(rs.getString("nombre"));
+                txtApellidosModificar.setText(rs.getString("apellidos"));
+                txtTelefonoModificar.setText(rs.getString("telefono"));
+                cmbRolModificar.setSelectedItem(rs.getString("rol"));
+
+                JOptionPane.showMessageDialog(this, "Usuario encontrado y cargado.");
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró un usuario con ese ID.");
+            }
+
+            rs.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+
+        // Refresca tabla usuarios modificables:
+        cargarTablaModificarUsuarios();
+    }//GEN-LAST:event_btnBuscarUsuarioActionPerformed
+
+    private void PaneUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PaneUsuariosMouseClicked
+        TablePane1.setSelectedIndex(4);
+        cargarUsuarios();
+    }//GEN-LAST:event_PaneUsuariosMouseClicked
+
+    private void btnGuardarCambiosUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosUsuarioActionPerformed
+        String idTxt = txtBuscarIdUsuario.getText().trim(); // Usas el ID que buscaste
+        String user = txtUserModificar.getText().trim();
+        String nombre = txtNombreModificar.getText().trim();
+        String apellidos = txtApellidosModificar.getText().trim();
+        String telefono = txtTelefonoModificar.getText().trim();
+        String rol = cmbRolModificar.getSelectedItem() != null ? cmbRolModificar.getSelectedItem().toString() : "";
+
+        // Validaciones básicas
+        if (idTxt.isEmpty() || !idTxt.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "ID inválido.");
+            return;
+        }
+
+        int id = Integer.parseInt(idTxt);
+
+        if (user.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Usuario no puede estar vacío.");
+            return;
+        }
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nombre no puede estar vacío.");
+            return;
+        }
+        if (apellidos.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Apellidos no pueden estar vacíos.");
+            return;
+        }
+        if (telefono.isEmpty() || !telefono.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Teléfono inválido.");
+            return;
+        }
+        if (rol.isEmpty() || rol.equalsIgnoreCase("Seleccione rol")) {
+            JOptionPane.showMessageDialog(this, "Seleccione un rol válido.");
+            return;
+        }
+
+        // Hacer UPDATE
+        try (Connection con = new cConnection().ObtenerConexion()) {
+            String sql = "UPDATE Usuario SET usuario = ?, nombre = ?, apellidos = ?, telefono = ?, rol = ? WHERE id_usuario = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, user);
+            ps.setString(2, nombre);
+            ps.setString(3, apellidos);
+            ps.setString(4, telefono);
+            ps.setString(5, rol);
+            ps.setInt(6, id);
+
+            int filas = ps.executeUpdate();
+            if (filas > 0) {
+                JOptionPane.showMessageDialog(this, "Usuario modificado correctamente.");
+                cargarUsuarios(); // Si quieres, refresca tabla principal
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró usuario para modificar.");
+            }
+
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al modificar usuario: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnGuardarCambiosUsuarioActionPerformed
+
+    private void btnSalirModificarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirModificarUsuarioActionPerformed
+        cargarUsuarios();
+        FrmModificarUsuario.setVisible(false);
+        
+    }//GEN-LAST:event_btnSalirModificarUsuarioActionPerformed
+    
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1161,6 +2114,7 @@ public class FrmReservas extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JFrame FrmGestionReservas;
+    private javax.swing.JFrame FrmModificarUsuario;
     private javax.swing.JFrame FrmRegistrarUsuario;
     private javax.swing.JPanel Pane1;
     private javax.swing.JPanel PaneInicio;
@@ -1168,15 +2122,31 @@ public class FrmReservas extends javax.swing.JFrame {
     private javax.swing.JPanel PanePlatillos;
     private javax.swing.JPanel PaneReservas;
     private javax.swing.JPanel PaneUsuarios;
+    private javax.swing.JPanel PanelRegistrarUsuario;
     private javax.swing.JTabbedPane TablePane1;
     private javax.swing.JLabel User;
     private javax.swing.JLabel User1;
+    private javax.swing.JButton btnAgregarMesa;
+    private javax.swing.JButton btnAgregarPlatillo;
+    private javax.swing.JButton btnBuscarPlatillo;
+    private javax.swing.JButton btnBuscarReserva;
+    private javax.swing.JButton btnBuscarUsuario;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnDeshabilitarMesa;
+    private javax.swing.JButton btnDeshabilitarPlatillo;
+    private javax.swing.JButton btnEliminarUsuario;
+    private javax.swing.JButton btnGuardarCambiosUsuario;
+    private javax.swing.JButton btnHabilitarMesa;
+    private javax.swing.JButton btnHabilitarPlatillo;
     public javax.swing.JButton btnIniciarSesion;
+    private javax.swing.JButton btnModificarUsuario;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnRegistrarUsuario;
+    private javax.swing.JButton btnSalirModificarUsuario;
+    private javax.swing.JButton btnTerminarReserva;
+    private javax.swing.JButton btnVolverLogin;
     private javax.swing.JComboBox<String> cmbRol;
-    private javax.swing.JComboBox<String> cmbSede;
+    private javax.swing.JComboBox<String> cmbRolModificar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1188,6 +2158,9 @@ public class FrmReservas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
@@ -1197,8 +2170,6 @@ public class FrmReservas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
@@ -1209,16 +2180,13 @@ public class FrmReservas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
-    private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
-    private javax.swing.JLabel jLabel47;
-    private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -1229,18 +2197,314 @@ public class FrmReservas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable4;
-    private javax.swing.JTable jTable5;
+    private javax.swing.JTable tablaMesas;
+    private javax.swing.JTable tablaModificarUsuarios;
+    private javax.swing.JTable tablaPlatillos;
+    private javax.swing.JTable tablaUsuarios;
+    private javax.swing.JTable tblReservasActivas;
+    private javax.swing.JTable tblReservasTerminadas;
     private javax.swing.JTextField txtApellidos;
+    private javax.swing.JTextField txtApellidosModificar;
+    private javax.swing.JTextField txtBuscarCodigoReserva;
+    private javax.swing.JTextField txtBuscarIdUsuario;
+    private javax.swing.JTextField txtBuscarPlatillo;
+    private javax.swing.JTextField txtCapacidadMesa;
     private javax.swing.JTextField txtContraseña;
-    private javax.swing.JTextField txtContraseñaUser;
-    private javax.swing.JTextField txtNombres;
+    private javax.swing.JTextField txtContraseñaLogin;
+    private javax.swing.JTextField txtDescripcionPlatillo;
+    private javax.swing.JTextField txtDireccionRestaurante;
+    private javax.swing.JTextField txtHorarioRestaurante;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtNombreModificar;
+    private javax.swing.JTextField txtNombrePlatillo;
+    private javax.swing.JTextField txtNombreRestaurante;
+    private javax.swing.JTextField txtNumeroMesa;
+    private javax.swing.JTextField txtPrecioPlatillo;
     private javax.swing.JTextField txtTelefono;
+    private javax.swing.JTextField txtTelefonoModificar;
+    private javax.swing.JTextField txtTelefonoRestaurante;
     private javax.swing.JTextField txtUser;
-    private javax.swing.JTextField txtUsuario;
+    private javax.swing.JTextField txtUserLogin;
+    private javax.swing.JTextField txtUserModificar;
     // End of variables declaration//GEN-END:variables
+    //Para cargar Roles con el combobox
+    private void cargarRoles() {
+        cmbRol.removeAllItems();
+        cmbRol.addItem("Seleccione rol");
+
+        boolean hayAdmin = false;
+
+        try {
+            cConnection cn = new cConnection();
+            Connection con = cn.ObtenerConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM Usuario WHERE rol = 'Administrador'");
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                hayAdmin = count > 0;
+            }
+
+            rs.close();
+            ps.close();
+            con.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error validando administrador: " + ex.getMessage());
+        }
+
+        if (hayAdmin) {
+            cmbRol.addItem("Empleado");
+            cmbRol.addItem("Mozo");
+            cmbRol.addItem("Cocinero");
+            cmbRol.addItem("Recepcionista");
+        } else {
+            cmbRol.addItem("Administrador");
+        }
+    }
+    private void rolSeleccionado(java.awt.event.ActionEvent evt) {
+        String rol = cmbRol.getSelectedItem() != null ? cmbRol.getSelectedItem().toString() : "";
+        boolean esAdmin = rol.equalsIgnoreCase("Administrador");
+
+        txtNombreRestaurante.setEnabled(esAdmin);
+        txtDireccionRestaurante.setEnabled(esAdmin);
+        txtTelefonoRestaurante.setEnabled(esAdmin);
+        txtHorarioRestaurante.setEnabled(esAdmin);
+    }
+    private void cargarReservasActivas() {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("Código");
+        modelo.addColumn("Cliente");
+        modelo.addColumn("Mesa");
+        modelo.addColumn("Estado");
+
+        tblReservasActivas.setModel(modelo);
+
+        try (Connection con = new cConnection().ObtenerConexion()) {
+            String sql = "SELECT r.id_reserva, r.codigo_reserva, c.nombre || ' ' || c.apellidos AS cliente, m.numero_mesa, r.estado " +
+                         "FROM Reserva r JOIN Cliente c ON r.id_cliente = c.id_cliente " +
+                         "JOIN Mesa m ON r.id_mesa = m.id_mesa " +
+                         "WHERE r.estado = 'Activo'";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                modelo.addRow(new Object[]{
+                    rs.getInt("id_reserva"),
+                    rs.getString("codigo_reserva"),
+                    rs.getString("cliente"),
+                    rs.getInt("numero_mesa"),
+                    rs.getString("estado")
+                });
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error cargando reservas activas: " + e.getMessage());
+        }
+    }
+    private void cargarReservasTerminadas() {
+    DefaultTableModel modelo = new DefaultTableModel();
+    modelo.addColumn("ID");
+    modelo.addColumn("Código");
+    modelo.addColumn("Cliente");
+    modelo.addColumn("Mesa");
+    modelo.addColumn("Estado");
+
+    tblReservasTerminadas.setModel(modelo);
+
+    try (Connection con = new cConnection().ObtenerConexion()) {
+        String sql = "SELECT r.id_reserva, r.codigo_reserva, c.nombre || ' ' || c.apellidos AS cliente, m.numero_mesa, r.estado " +
+                     "FROM Reserva r JOIN Cliente c ON r.id_cliente = c.id_cliente " +
+                     "JOIN Mesa m ON r.id_mesa = m.id_mesa " +
+                     "WHERE r.estado = 'Terminado'";
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            modelo.addRow(new Object[]{
+                rs.getInt("id_reserva"),
+                rs.getString("codigo_reserva"),
+                rs.getString("cliente"),
+                rs.getInt("numero_mesa"),
+                rs.getString("estado")
+            });
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error cargando reservas terminadas: " + e.getMessage());
+    }
+}
+    private void cargarMesas() {
+        DefaultTableModel modelo = (DefaultTableModel) tablaMesas.getModel();
+        modelo.setRowCount(0); // Limpia filas
+
+        try (Connection con = new cConnection().ObtenerConexion()) {
+            String sql = "SELECT id_mesa, numero_mesa, capacidad, estado FROM Mesa";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int idMesa = rs.getInt("id_mesa");
+                int numero = rs.getInt("numero_mesa");
+                int capacidad = rs.getInt("capacidad");
+                String estado = rs.getString("estado");
+
+                modelo.addRow(new Object[]{idMesa, numero, capacidad, estado});
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private boolean validarNuevaMesa(int numeroMesa, int capacidadMesa) {
+        // Números positivos
+        if (numeroMesa <= 0) {
+            JOptionPane.showMessageDialog(this, "El número de mesa debe ser mayor a 0.");
+            return false;
+        }
+        if (capacidadMesa <= 0) {
+            JOptionPane.showMessageDialog(this, "La capacidad debe ser mayor a 0.");
+            return false;
+        }
+
+        // Revisar si ya existe
+        boolean existe = false;
+        try (Connection con = new cConnection().ObtenerConexion()) {
+            String sql = "SELECT COUNT(*) FROM Mesa WHERE numero_mesa = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, numeroMesa);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                existe = rs.getInt(1) > 0;
+            }
+
+            rs.close();
+            ps.close();
+
+            if (existe) {
+                JOptionPane.showMessageDialog(this, "Ya existe una mesa con ese número.");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al validar número de mesa: " + e.getMessage());
+            return false;
+        }
+
+        return true; // Todo OK
+    }
+    private void cargarPlatillos() {
+        DefaultTableModel modelo = (DefaultTableModel) tablaPlatillos.getModel();
+        modelo.setRowCount(0);
+
+        try (Connection con = new cConnection().ObtenerConexion()) {
+            String sql = "SELECT id_platillo, nombre, precio, estado FROM Platillo";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id_platillo");
+                String nombre = rs.getString("nombre");
+                double precio = rs.getDouble("precio");
+                String estado = rs.getString("estado");
+
+                modelo.addRow(new Object[]{id, nombre, precio, estado});
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }
+    private void cargarTablaModificarUsuarios() {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("Usuario");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Apellidos");
+        modelo.addColumn("Teléfono");
+        modelo.addColumn("Rol");
+
+        try (Connection con = new cConnection().ObtenerConexion()) {
+            String sql = "SELECT * FROM Usuario";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Object[] fila = {
+                    rs.getInt("id_usuario"),
+                    rs.getString("usuario"),
+                    rs.getString("nombre"),
+                    rs.getString("apellidos"),
+                    rs.getString("telefono"),
+                    rs.getString("rol")
+                };
+                modelo.addRow(fila);
+            }
+
+            rs.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar usuarios: " + e.getMessage());
+        }
+
+        tablaModificarUsuarios.setModel(modelo);
+    }
+    private void cargarUsuarios() {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("Usuario");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Apellidos");
+        modelo.addColumn("Teléfono");
+        modelo.addColumn("Rol");
+
+        try (Connection con = new cConnection().ObtenerConexion()) {
+            String sql = "SELECT * FROM Usuario";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Object[] fila = {
+                    rs.getInt("id_usuario"),
+                    rs.getString("usuario"),
+                    rs.getString("nombre"),
+                    rs.getString("apellidos"),
+                    rs.getString("telefono"),
+                    rs.getString("rol")
+                };
+                modelo.addRow(fila);
+            }
+
+            rs.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar usuarios: " + e.getMessage());
+        }
+
+        tablaUsuarios.setModel(modelo);
+    }
+    private void cargarRolesModificar() {
+        cmbRolModificar.removeAllItems();
+        cmbRolModificar.addItem("Seleccione rol");
+
+        // Puedes traer todos los roles fijos o como prefieras
+        cmbRolModificar.addItem("Administrador");
+        cmbRolModificar.addItem("Empleado");
+        cmbRolModificar.addItem("Mozo");
+        cmbRolModificar.addItem("Cocinero");
+        cmbRolModificar.addItem("Recepcionista");
+    }
 }

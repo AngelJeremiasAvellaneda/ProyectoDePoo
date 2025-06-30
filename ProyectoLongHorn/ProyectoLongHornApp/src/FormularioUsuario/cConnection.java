@@ -2,7 +2,7 @@ package FormularioUsuario;
 import java.sql.*;
 
 public class cConnection {
-    private String url = "jdbc:ucanaccess://C:\\Users\\labe503\\Downloads\\ProyectoDePoo-master\\ProyectoDePoo-master\\ProyectoLongHorn\\JavaApplication10.accdb";
+    private String url = "jdbc:ucanaccess://C:\\Users\\USER\\Documents\\Grupo7_LongHorn\\ProyectoLongHorn\\ProyectoLongHornApp\\DataBaseReservas.accdb";
     private String usr = "";
     private String pswd = "";
     private Connection con = null;
